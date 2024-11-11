@@ -15,14 +15,14 @@ ingress_details:
 
 # Metrics
 main_deployment_metrics:
-  http_requests_total: #TODO: Enter the value from main deployment's /metrics endpoint
-  process_cpu_seconds_total: #TODO: Enter the CPU seconds from main deployment
-  process_resident_memory_bytes: #TODO: Enter the memory usage from main deployment
+  http_requests_total: 44.0
+  process_cpu_seconds_total: 12.81
+  process_resident_memory_bytes: 2.1774336e+07
 
 canary_deployment_metrics:
-  http_requests_total: #TODO: Enter the value from canary deployment's /metrics endpoint
-  process_cpu_seconds_total: #TODO: Enter the CPU seconds from canary deployment
-  process_resident_memory_bytes: #TODO: Enter the memory usage from canary deployment
+  http_requests_total: 1.0
+  process_cpu_seconds_total: 3.46
+  process_resident_memory_bytes: 2.2278144e+07
 
 # Traffic Distribution Test
 traffic_test_results:
@@ -33,14 +33,21 @@ traffic_test_results:
 
 # Prometheus Queries
 prometheus_metrics:
-  main_request_rate: #TODO: Enter the result of rate(http_requests_total{version="v1"}[5m])
-  canary_request_rate: #TODO: Enter the result of rate(http_requests_total{version="v2"}[5m])
+  main_request_rate: 
+ - {container="canary-demo", endpoint="http", instance="192.168.194.15:5000", job="canary-demo", namespace="canary-demo", pod="canary-demo-b46b9457d-2sxms", service="canary-demo", version="v1"}
+ - {container="canary-demo", endpoint="http", instance="192.168.194.16:5000", job="canary-demo", namespace="canary-demo", pod="canary-demo-b46b9457d-pjhkb", service="canary-demo", version="v1"}
+ - {container="canary-demo", endpoint="http", instance="192.168.194.17:5000", job="canary-demo", namespace="canary-demo", pod="canary-demo-b46b9457d-5s9r4", service="canary-demo", version="v1"}
+  
+  canary_request_rate:
+  - {container="canary-demo", endpoint="http", instance="192.168.194.18:5000", job="canary-demo-canary", namespace="canary-demo", pod="canary-demo-canary-7c68c5df46-nzhqp", service="canary-demo-canary", version="v2"}
+  - {container="canary-demo", endpoint="http", instance="192.168.194.24:5000", job="canary-demo-canary", namespace="canary-demo", pod="canary-demo-canary-7c68c5df46-bvgl8", service="canary-demo-canary", version="v2"}
+
 
 # Rollback Test
 rollback_test:
   previous_revision: #TODO: Enter the revision number before rollback
   rollback_command_used: helm rollback canary-demo 1 -n canary-demo
-  time_to_rollback_seconds: #TODO: Enter how long the rollback took to complete
+  time_to_rollback_seconds: super fast really.
 
 # Error Budget Calculation (based on 99.9% SLO)
 error_budget:
@@ -50,4 +57,4 @@ error_budget:
 # Additional Observations
 observations:
   unexpected_behaviors: #TODO: List any unexpected behaviors you observed
-  suggested_improvements: #TODO: List any improvements you would suggest
+  suggested_improvements: Using KinD is easier for testing 
