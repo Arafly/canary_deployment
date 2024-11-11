@@ -5,13 +5,13 @@ pods_status:
 
 # Service Information
 service_endpoints:
-  main_service_cluster_ip: #TODO: Enter the ClusterIP of main service
-  canary_service_cluster_ip: #TODO: Enter the ClusterIP of canary service
+  main_service_cluster_ip: 192.168.194.247
+  canary_service_cluster_ip: 192.168.194.179
 
 # Ingress Information
 ingress_details:
-  address: #TODO: Enter the Ingress controller IP address
-  host: #TODO: Enter the configured host (should be canary-demo.local)
+  address: localhost
+  host: http://canary-demo-127-0-0-1.nip.io/ # Utilizied nip.io for easy DNS resolution
 
 # Metrics
 main_deployment_metrics:
@@ -27,9 +27,9 @@ canary_deployment_metrics:
 # Traffic Distribution Test
 traffic_test_results:
   total_requests_sent: #TODO: Enter how many test requests you sent (should be 20)
-  main_responses_received: #TODO: Enter how many responses were from main deployment
-  canary_responses_received: #TODO: Enter how many responses were from canary deployment
-  actual_canary_percentage: #TODO: Calculate the actual percentage of canary traffic
+  main_responses_received: 16
+  canary_responses_received: 4
+  actual_canary_percentage: actual_canary_percentage = (4 / 20) * 100 = 20%
 
 # Prometheus Queries
 prometheus_metrics:
@@ -39,7 +39,7 @@ prometheus_metrics:
 # Rollback Test
 rollback_test:
   previous_revision: #TODO: Enter the revision number before rollback
-  rollback_command_used: #TODO: Enter the helm rollback command you used
+  rollback_command_used: helm rollback canary-demo 1 -n canary-demo
   time_to_rollback_seconds: #TODO: Enter how long the rollback took to complete
 
 # Error Budget Calculation (based on 99.9% SLO)
